@@ -9,10 +9,21 @@ import {
 import Button from "../ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useCartStore } from "@/app/hooks/use-cart-store";
+import { Product } from "@/app/types";
 
-const ProductActions = () => {
+type TProductActionProps = {
+  product: Product;
+  stock: number;
+};
+
+const ProductActions = ({ product, stock }: TProductActionProps) => {
   const { push } = useRouter();
+  const { addItem } = useCartStore();
   const [qty, setQty] = useState(1);
+  const handleAddtoChart = () => {
+    addItem(product, qty);
+  };
 
   return (
     <div className="flex gap-5">
@@ -23,7 +34,7 @@ const ProductActions = () => {
         <div className="flex flex-col h-full w-10">
           <button
             className="flex-1 flex items-center cursor-pointer justify-center border-b border-gray-500"
-            onClick={() => setQty(qty + 1)}
+            onClick={() => setQty(qty < stock ? qty + 1 : qty)}
           >
             <FiChevronUp />
           </button>
@@ -36,7 +47,7 @@ const ProductActions = () => {
         </div>
       </div>
 
-      <Button className="px-20 w-full">
+      <Button className="px-20 w-full" onClick={handleAddtoChart}>
         <FiShoppingBag size={24} />
         Add to chart
       </Button>

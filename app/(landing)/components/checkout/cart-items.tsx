@@ -5,7 +5,6 @@ import Button from "../ui/button";
 import priceFormatter from "@/app/utils/price-formatter";
 import Image from "next/image";
 import CardWithHeader from "../ui/card-with-header";
-import { useRouter } from "next/navigation";
 import { useCartStore } from "@/app/hooks/use-cart-store";
 import { getImageUrl } from "@/app/lib/api";
 
@@ -14,7 +13,6 @@ type TCartItems = {
 };
 
 const CartItems = ({ handlePayment }: TCartItems) => {
-  const { push } = useRouter();
   const { items } = useCartStore();
   const totalPrice = items.reduce(
     (total, item) => (total += item.price * item.qty),
@@ -23,7 +21,7 @@ const CartItems = ({ handlePayment }: TCartItems) => {
 
   return (
     <CardWithHeader title="Cart Items">
-      <div className=" min-h-[400px] flex flex-col justify-between">
+      <div className=" min-h-100 flex flex-col justify-between">
         <div className="overflow-auto">
           {items.map((item) => (
             <div

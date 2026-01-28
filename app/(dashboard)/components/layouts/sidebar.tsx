@@ -1,8 +1,9 @@
 "use client";
 
+import { logout } from "@/app/services/auth.service";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   FiBox,
   FiCreditCard,
@@ -36,6 +37,11 @@ const menuItems = [
 
 const Sidebar = () => {
   const pathname = usePathname();
+  const { push } = useRouter();
+  const handleLogout = () => {
+    logout();
+    push("/admin/login");
+  };
 
   return (
     <aside className="w-80 min-h-screen bg-white border-r border-gray-100 flex flex-col fixed left-0 top-0">
@@ -64,13 +70,13 @@ const Sidebar = () => {
           );
         })}
       </div>
-      <Link
-        href="/admin/login"
-        className="flex gap-3 mx-5 py-2 px-4.5 mt-auto font-medium rounded-lg duration-300 hover:bg-gray-100 mb-10"
+      <button
+        onClick={handleLogout}
+        className="flex cursor-pointer gap-3 mx-5 py-2 px-4.5 mt-auto font-medium rounded-lg duration-300 hover:bg-gray-100 mb-10"
       >
         <FiLogOut size={24} />
         LogOut
-      </Link>
+      </button>
     </aside>
   );
 };

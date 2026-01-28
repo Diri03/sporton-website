@@ -1,14 +1,14 @@
 import { FiX } from "react-icons/fi";
 
 type TModalProps = {
-  isOpen: boolean; // true / false
+  isModalOpen: boolean; // true / false
   onClose: () => void;
   title: string;
   children: React.ReactNode;
 };
 
-const Modal = ({ isOpen, onClose, title, children }: TModalProps) => {
-  if (!isOpen) {
+const Modal = ({ isModalOpen, onClose, title, children }: TModalProps) => {
+  if (!isModalOpen) {
     return null;
   }
 
